@@ -18,7 +18,10 @@ const config = {
 			fallback: null,
 			precompress: false
 		}
-		)
+		),
+		prerender: {
+		entries: ['*']  // すべてのルートをプリレンダリング
+		}
 	}
 };
 
