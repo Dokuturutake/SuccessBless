@@ -18,3 +18,4 @@ jobs:
         with:
           branch: gh-pages
           folder: build
+          clean: true # デプロイ前に古いファイルを削除
