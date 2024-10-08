@@ -17,5 +17,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: build
+          folder: build # SvelteKitの出力ディレクトリ名と一致していることを確認
           clean: true # デプロイ前に古いファイルを削除
