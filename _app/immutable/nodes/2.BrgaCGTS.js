@@ -279,6 +279,7 @@ import{r as Je,a as he,y as ie,z as te,A as De,B as I,f as st,b as Xe,u as Qe,g 
    - 一言
    - 予想外
    - 創造的
+   - インプレゾンビ
 3. 各回答には、そのスタイルに合ったユーザ名も含めてください。
 
 # Output Format
