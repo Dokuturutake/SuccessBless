@@ -1,4 +1,3 @@
-import { analyzeTweetWithGemini } from '$lib/geminiApi';
 import { writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -28,20 +27,25 @@ function createTweetStore() {
 
   return {
     subscribe,
-    addTweet: (name: string, content: string, likes:number) => update(tweets => {
-      const newTweet: Tweet = {
-        id: uuidv4(),
-        name,
-        content,
-        createdAt: new Date().toISOString(),
-        likes: likes,
-        replies: [],
-        replyCount: 0
-      };
-      const updatedTweets = [newTweet, ...tweets];
-      localStorage.setItem('tweets', JSON.stringify(updatedTweets));
-      return updatedTweets;
-    }),
+    addTweet: (name: string, content: string, likes: number): Tweet => {
+      let newTweet: Tweet;
+      update(tweets => {
+        newTweet = {
+          id: uuidv4(),
+          name,
+          content,
+          createdAt: new Date().toISOString(),
+          likes: likes,
+          replies: [],
+          replyCount: 0
+        };
+        const updatedTweets = [newTweet, ...tweets];
+        localStorage.setItem('tweets', JSON.stringify(updatedTweets));
+        return updatedTweets;
+      });
+      
+      return newTweet!;
+    },
     addReply: (tweetId: string, reply: Omit<Reply, 'id' | 'tweetId' | 'createdAt'>) => update(tweets => {
       const updatedTweets = tweets.map(tweet => {
         if (tweet.id === tweetId) {

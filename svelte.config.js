@@ -15,12 +15,15 @@ const config = {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: null,
-			precompress: false
+			fallback: '404.html',
+			precompress: false,
 		}
 		),
 		prerender: {
 		entries: ['*']  // すべてのルートをプリレンダリング
+		},
+		paths: {
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
 		}
 	}
 };
