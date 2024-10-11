@@ -74,7 +74,7 @@
           </svg>
           <span>SUCCESSBLESS</span>
         </a>
-        <a href="/" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/'}>
+        <a href="{base}/" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/'}>
           <LucideHome size={24} />
           <span>ホーム</span>
         </a>

@@ -20,18 +20,5 @@ import { Button } from "$lib/components/ui/button";
       <span class="text-gray-700 dark:text-gray-300">Gemini API Key</span>
         <ApiKeyInput/>
     </div>
-    <div class="flex items-center justify-between">
-      <span class="text-gray-700 dark:text-gray-300">ダークモード</span>
-      <Switch bind:checked={darkMode} />
-    </div>
-    <div class="flex items-center justify-between">
-      <span class="text-gray-700 dark:text-gray-300">通知</span>
-      <Switch bind:checked={notifications} />
-    </div>
-    <div class="flex items-center justify-between">
-      <span class="text-gray-700 dark:text-gray-300">プライバシーモード</span>
-      <Switch bind:checked={privacyMode} />
-    </div>
-    <Button on:click={handleLogout} variant="destructive" class="w-full">ログアウト</Button>
   </div>
 </div>
