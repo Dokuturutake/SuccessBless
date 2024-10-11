@@ -9,6 +9,7 @@
   import TweetForm from "$lib/components/TweetForm.svelte";
   import { onMount } from 'svelte';
 	import ApiKeyInput from "$lib/components/ApiKeyInput.svelte";
+	import { base } from "$app/paths";
 
   let sidebarOpen = false;
   let tweetDialogOpen = false;
@@ -77,15 +78,15 @@
           <LucideHome size={24} />
           <span>ホーム</span>
         </a>
-        <a href="/profile" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/profile'}>
+        <a href="{base}/profile" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/profile'}>
           <LucideUser size={24} />
           <span>プロフィール</span>
         </a>
-        <a href="/notifications" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/notifications'}>
+        <a href="{base}/notifications" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/notifications'}>
           <LucideBell size={24} />
           <span>通知</span>
         </a>
-        <a href="/settings" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/settings'}>
+        <a href="{base}/settings" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/settings'}>
           <LucideSettings size={24} />
           <span>設定</span>
         </a>
