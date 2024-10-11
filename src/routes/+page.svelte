@@ -21,21 +21,10 @@
   </script>
   
   <svelte:head>
-    <title>TwitterライクなSvelteKitアプリ</title>
+    <title>SUCCESSBLESS</title>
   </svelte:head>
   
   <main class="container mx-auto px-4 py-8">
-    <header class="mb-8">
-      <h1 class="text-3xl font-bold text-center mb-4">TwitterライクなSvelteKitアプリ</h1>
-      {#if isLoggedIn}
-        <div class="flex justify-between items-center">
-          <p class="text-lg">ようこそ、{username}さん！</p>
-          <Button on:click={handleLogout}>ログアウト</Button>
-        </div>
-      {:else}
-        <p class="text-center">ログインしてください</p>
-      {/if}
-    </header>
   
     {#if isLoggedIn}
       <MainFeed />
@@ -48,5 +37,5 @@
   </main>
   
   <footer class="mt-16 text-center text-gray-500">
-    <p>&copy; 2024 TwitterライクなSvelteKitアプリ. All rights reserved.</p>
+    <p>&copy; 2024 SUCCESSBLESS. All rights reserved.</p>
   </footer>

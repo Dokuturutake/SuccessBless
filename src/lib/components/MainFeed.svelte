@@ -6,6 +6,7 @@
   import { tweetStore } from "$lib/stores/tweetStore";
   import { apiKeyStore } from "$lib/stores/apiKeyStore";
   import { startRandomLikeIncrease } from "$lib/utils/likeSimulator";
+	import { LucideSettings } from "lucide-svelte";
 
   let error = "";
 
@@ -17,7 +18,7 @@
 </script>
 
 <div class="max-w-2xl mx-auto mt-8">
-  <ApiKeyInput bind:error />
   <TweetForm bind:error />
   <TweetList />
+
 </div>

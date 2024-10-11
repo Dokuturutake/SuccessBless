@@ -3,9 +3,11 @@
   import { Input } from "$lib/components/ui/input";
   import { Alert, AlertDescription } from "$lib/components/ui/alert";
   import { apiKeyStore } from "$lib/stores/apiKeyStore";
+  import { Eye, EyeOff } from "lucide-svelte";
 
   export let error = "";
   let apiKey = "";
+  let showPassword = false;
 
   apiKeyStore.subscribe(value => {
     apiKey = value;
@@ -15,10 +17,29 @@
     apiKeyStore.setApiKey(apiKey);
     error = "";
   }
+
+  function togglePasswordVisibility() {
+    showPassword = !showPassword;
+  }
 </script>
 
 <div class="mb-4">
-  <Input type="text" placeholder="Enter Gemini API Key" bind:value={apiKey} />
+  <div class="relative">
+    <Input type="{showPassword ? "text" : "password"}" placeholder="Enter Gemini API Key" bind:value={apiKey} />
+    <Button
+      class="absolute right-2 top-1/2 -translate-y-1/2"
+      variant="ghost"
+      size="icon"
+      on:click={togglePasswordVisibility}
+    >
+      {#if showPassword}
+        <EyeOff class="h-4 w-4" />
+      {:else}
+        <Eye class="h-4 w-4" />
+      {/if}
+    </Button>
+
+  </div>
   <Button on:click={setApiKey}>Set API Key</Button>
 </div>
 
@@ -27,3 +48,4 @@
     <AlertDescription>{error}</AlertDescription>
   </Alert>
 {/if}
+

@@ -5,7 +5,14 @@
   import { createTweet } from "$lib/utils/tweetActions";
   import { Image, Smile, Calendar, MapPin, X } from 'lucide-svelte';
   import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "$lib/components/ui/dialog";
+  import { createEventDispatcher } from 'svelte';
 
+
+  const dispatch = createEventDispatcher();
+
+  function handleClick() {
+    dispatch('reply', { message: 'Replyボタンがクリックされました' });
+  }
   export let error = "";
   let newTweetContent = "";
   let apiKey = "";
@@ -18,6 +25,8 @@
   });
 
   async function handleCreateTweet() {
+    handleClick();
+
     error = await createTweet(newTweetContent, selectedImage);
     if (!error) {
       newTweetContent = "";
@@ -120,7 +129,7 @@
           class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-full"
           disabled={newTweetContent.length === 0 || isOverLimit}
         >
-          Tweet
+          post
         </Button>
       </div>
     </div>

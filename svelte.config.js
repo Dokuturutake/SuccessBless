@@ -20,7 +20,7 @@ const config = {
 		}
 		),
 		prerender: {
-		entries: ['*']  // すべてのルートをプリレンダリング
+		entries: ['*', '/settings/']  // すべてのルートをプリレンダリング
 		},
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
