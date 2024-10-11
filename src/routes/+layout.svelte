@@ -51,7 +51,7 @@
     <button on:click={toggleSidebar} class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
       <LucideMenu size={24} />
     </button>
-    <div class="text-xl font-bold text-blue-500">Twitter Clone</div>
+    <div class="text-xl font-bold text-blue-500">SUCCESSBLESS</div>
     <button on:click={openTweetForm} class="text-blue-500 hover:text-blue-600">
       <LucideFeather size={24} />
     </button>
