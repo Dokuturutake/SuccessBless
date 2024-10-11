@@ -39,11 +39,11 @@
   <div class="flex items-start space-x-3">
     <img src="https://via.placeholder.com/48" alt="Profile" class="w-12 h-12 rounded-full">
     <div class="flex-1">
-      <div class="flex items-center">
-        <span class="font-bold text-[15px]">{tweet.name}</span>
-        <span class="text-gray-500 text-[15px] ml-2">@{tweet.name.toLowerCase().replace(' ', '')}</span>
-        <span class="text-gray-500 text-[15px] mx-1">·</span>
-        <span class="text-gray-500 text-[15px]">{formatDate(tweet.createdAt)}</span>
+      <div class="flex flex-wrap items-center gap-y-1">
+        <span class="font-bold text-[15px] mr-2">{tweet.name}</span>
+        <span class="text-gray-500 text-[15px] mr-2">@{tweet.name.toLowerCase().replace(' ', '')}</span>
+        <span class="text-gray-500 text-[15px] mx-1 hidden sm:inline">·</span>
+        <span class="text-gray-500 text-[15px] w-full sm:w-auto">{formatDate(tweet.createdAt)}</span>
       </div>
       <p class="mt-1 text-[15px] leading-normal">{tweet.content}</p>
       
@@ -87,7 +87,7 @@
       {#if tweet.replies.length > 0}
         <div class="mt-4 space-y-4">
           {#each tweet.replies as reply (reply.id)}
-            <div class="flex items-start space-x-3 pl-12 border-l-2 border-gray-200">
+            <div class="flex items-start space-x-3 md:pl-12 pl-4 border-l-2 border-gray-200">
               <img src="https://via.placeholder.com/36" alt="Profile" class="w-9 h-9 rounded-full">
               <div class="flex-1">
                 <div class="flex items-center">
