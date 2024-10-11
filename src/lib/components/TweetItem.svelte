@@ -2,48 +2,117 @@
   import { Button } from "$lib/components/ui/button";
   import { tweetStore, type Tweet } from "$lib/stores/tweetStore";
   import { handleLikeTweet, handleLikeReply } from "$lib/utils/likeActions";
+  import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "$lib/components/ui/collapsible";
+  import { Heart, MessageCircle, Repeat2, Share } from 'lucide-svelte';
 
   export let tweet: Tweet;
 
   let likedTweets = new Set<string>();
   let likedReplies = new Set<string>();
+  let showReplies = false;
+
+  function toggleReplies() {
+    showReplies = !showReplies;
+  }
+
+  function formatCount(count: number): string {
+    return count > 999 ? `${(count / 1000).toFixed(1)}K` : count.toString();
+  }
+
+  function formatDate(date: string): string {
+    const tweetDate = new Date(date);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - tweetDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 1) {
+      return `${tweetDate.getHours()}:${tweetDate.getMinutes().toString().padStart(2, '0')}`;
+    } else if (diffDays < 7) {
+      return `${diffDays}d`;
+    } else {
+      return `${tweetDate.toLocaleString('default', { month: 'short' })} ${tweetDate.getDate()}`;
+    }
+  }
 </script>
 
-<div class="bg-white p-4 rounded-lg shadow">
-  <div class="font-bold">{tweet.name}</div>
-  <p>{tweet.content}</p>
-  <div class="text-sm text-gray-500 mt-2">
-    {new Date(tweet.createdAt).toLocaleString()}
-  </div>
-  <div class="mt-2 flex items-center space-x-4">
-    <Button 
-      variant="ghost" 
-      on:click={() => handleLikeTweet(tweet.id, likedTweets, tweetStore)} 
-      disabled={likedTweets.has(tweet.id)}
-    >
-      👍 {tweet.likes}
-    </Button>
-    <span>{tweet.replyCount} replies</span>
-  </div>
-  
-  {#if tweet.replies.length > 0}
-    <div class="mt-4 ml-4 space-y-2">
-      {#each tweet.replies as reply (reply.id)}
-        <div class="bg-gray-100 p-2 rounded" style={reply.style}>
-          <div class="font-bold">{reply.name}</div>
-          <p>{reply.content}</p>
-          <div class="text-xs text-gray-500 mt-1">
-            {new Date(reply.createdAt).toLocaleString()}
-          </div>
-          <Button 
-            variant="ghost" 
-            on:click={() => handleLikeReply(tweet.id, reply.id, likedReplies, tweetStore)} 
-            disabled={likedReplies.has(`${tweet.id}-${reply.id}`)}
-          >
-            👍 {reply.likes}
-          </Button>
+<div class="bg-white border-b border-gray-200 p-4">
+  <div class="flex items-start space-x-3">
+    <img src="https://via.placeholder.com/48" alt="Profile" class="w-12 h-12 rounded-full">
+    <div class="flex-1">
+      <div class="flex items-center">
+        <span class="font-bold text-[15px]">{tweet.name}</span>
+        <span class="text-gray-500 text-[15px] ml-2">@{tweet.name.toLowerCase().replace(' ', '')}</span>
+        <span class="text-gray-500 text-[15px] mx-1">·</span>
+        <span class="text-gray-500 text-[15px]">{formatDate(tweet.createdAt)}</span>
+      </div>
+      <p class="mt-1 text-[15px] leading-normal">{tweet.content}</p>
+      
+      <!-- 画像の表示 -->
+      {#if tweet.imageUrl}
+        <div class="mt-3 rounded-2xl overflow-hidden">
+          <img src={tweet.imageUrl} alt="Tweet image" class="w-full h-auto object-cover">
         </div>
-      {/each}
+      {/if}
+
+      <div class="mt-3 flex items-center justify-between text-gray-500">
+        <Button variant="ghost" class="hover:text-blue-500 p-2" on:click={toggleReplies}>
+          <MessageCircle size={18} />
+          <span class="ml-2 text-xs">{formatCount(tweet.replyCount)}</span>
+        </Button>
+        <Button variant="ghost" class="hover:text-green-500 p-2">
+          <Repeat2 size={18} />
+          <span class="ml-2 text-xs">0</span>
+        </Button>
+        <Button 
+          variant="ghost" 
+          class="hover:text-red-500 p-2" 
+          on:click={() => handleLikeTweet(tweet.id, likedTweets, tweetStore)} 
+          disabled={likedTweets.has(tweet.id)}
+        >
+          <Heart size={18} fill={likedTweets.has(tweet.id) ? "currentColor" : "none"} />
+          <span class="ml-2 text-xs">{formatCount(tweet.likes)}</span>
+        </Button>
+        <Button variant="ghost" class="hover:text-blue-500 p-2">
+          <Share size={18} />
+        </Button>
+      </div>
     </div>
-  {/if}
+  </div>
+
+  <Collapsible>
+    <CollapsibleTrigger class="w-full text-left text-sm text-blue-500 hover:underline mt-2" let:open>
+      {open ? 'Hide' : 'Show'} replies
+    </CollapsibleTrigger>
+    <CollapsibleContent>
+      {#if tweet.replies.length > 0}
+        <div class="mt-4 space-y-4">
+          {#each tweet.replies as reply (reply.id)}
+            <div class="flex items-start space-x-3 pl-12 border-l-2 border-gray-200">
+              <img src="https://via.placeholder.com/36" alt="Profile" class="w-9 h-9 rounded-full">
+              <div class="flex-1">
+                <div class="flex items-center">
+                  <span class="font-bold text-[14px]">{reply.name}</span>
+                  <span class="text-gray-500 text-[14px] ml-2">@{reply.name.toLowerCase().replace(' ', '')}</span>
+                  <span class="text-gray-500 text-[14px] mx-1">·</span>
+                  <span class="text-gray-500 text-[14px]">{formatDate(reply.createdAt)}</span>
+                </div>
+                <p class="mt-1 text-[14px] leading-normal">{reply.content}</p>
+                <div class="mt-2 flex items-center space-x-4 text-gray-500">
+                  <Button 
+                    variant="ghost" 
+                    class="hover:text-red-500 p-1" 
+                    on:click={() => handleLikeReply(tweet.id, reply.id, likedReplies, tweetStore)} 
+                    disabled={likedReplies.has(`${tweet.id}-${reply.id}`)}
+                  >
+                    <Heart size={16} fill={likedReplies.has(`${tweet.id}-${reply.id}`) ? "currentColor" : "none"} />
+                    <span class="ml-1 text-xs">{formatCount(reply.likes)}</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </CollapsibleContent>
+  </Collapsible>
 </div>

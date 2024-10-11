@@ -14,7 +14,6 @@
 
 ```json
 {
-	"likes": "予想されるいいね数",
 	"evaluation": "いいね！数推計の理由",
 	"improvement_points": "ツイート改善案"
 }

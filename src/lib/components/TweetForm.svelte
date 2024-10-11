@@ -1,35 +1,128 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
   import { Textarea } from "$lib/components/ui/textarea";
-  import { tweetStore } from "$lib/stores/tweetStore";
   import { apiKeyStore } from "$lib/stores/apiKeyStore";
   import { createTweet } from "$lib/utils/tweetActions";
+  import { Image, Smile, Calendar, MapPin, X } from 'lucide-svelte';
+  import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "$lib/components/ui/dialog";
 
   export let error = "";
   let newTweetContent = "";
   let apiKey = "";
+  let charLimit = 280;
+  let selectedImage: File | null = null;
+  let imagePreviewUrl = "";
 
   apiKeyStore.subscribe(value => {
     apiKey = value;
   });
 
   async function handleCreateTweet() {
-    error = await createTweet(newTweetContent);
-    if (!error) newTweetContent = "";
+    error = await createTweet(newTweetContent, selectedImage);
+    if (!error) {
+      newTweetContent = "";
+      selectedImage = null;
+      imagePreviewUrl = "";
+    }
   }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+      handleCreateTweet();
+    }
+  }
+
+  function handleImageSelect(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      selectedImage = input.files[0];
+      imagePreviewUrl = URL.createObjectURL(selectedImage);
+    }
+  }
+
+  function removeImage() {
+    selectedImage = null;
+    imagePreviewUrl = "";
+  }
+
+  $: charactersRemaining = charLimit - newTweetContent.length;
+  $: isOverLimit = charactersRemaining < 0;
 </script>
 
-<form on:submit|preventDefault={handleCreateTweet} class="mb-4">
-  <Textarea
-    bind:value={newTweetContent}
-    placeholder="What's happening?"
-    rows="3"
-    maxlength="140"
-  />
-  <div class="flex justify-between items-center mt-2">
-    <span class="text-sm text-gray-500">{140 - newTweetContent.length} characters remaining</span>
-    <Button type="submit" disabled={newTweetContent.length === 0 || newTweetContent.length > 140}>
-      Tweet
-    </Button>
-  </div>
-</form>
+<div class="bg-white border border-gray-200 rounded-lg p-4">
+  <form on:submit|preventDefault={handleCreateTweet} class="space-y-4">
+    <div class="flex items-start space-x-4">
+      <img src="https://via.placeholder.com/48" alt="Profile" class="w-12 h-12 rounded-full">
+      <Textarea
+        bind:value={newTweetContent}
+        placeholder="What's happening?"
+        rows="4"
+        class="flex-1 resize-none border-0 focus:ring-0 text-xl"
+        on:keydown={handleKeyDown}
+      />
+    </div>
+    
+    {#if selectedImage}
+      <div class="relative">
+        <img src={imagePreviewUrl} alt="Selected image" class="max-w-full h-auto rounded-lg">
+        <Button variant="ghost" class="absolute top-2 right-2 bg-gray-800 bg-opacity-50 text-white rounded-full p-1" on:click={removeImage}>
+          <X size={16} />
+        </Button>
+      </div>
+    {/if}
+
+    {#if error}
+      <p class="text-red-500 text-sm">{error}</p>
+    {/if}
+
+    <div class="flex items-center justify-between border-t border-gray-200 pt-3">
+      <div class="flex space-x-4">
+        <Dialog>
+          <DialogTrigger>
+            <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 p-2" title="Media">
+              <Image size={20} />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>画像をアップロード</DialogTitle>
+              <DialogDescription>
+                注意: アップロードする画像に個人情報や機密情報が含まれていないことを確認してください。
+                画像はAIに送信され分析されます。公開しても問題ない内容のみをアップロードしてください。
+              </DialogDescription>
+            </DialogHeader>
+            <input type="file" accept="image/*" on:change={handleImageSelect} class="mt-4" />
+          </DialogContent>
+        </Dialog>
+        <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 p-2" title="GIF">
+          <span class="font-bold">GIF</span>
+        </Button>
+        <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 p-2" title="Poll">
+          <Calendar size={20} />
+        </Button>
+        <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 p-2" title="Emoji">
+          <Smile size={20} />
+        </Button>
+        <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 p-2" title="Location">
+          <MapPin size={20} />
+        </Button>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        {#if newTweetContent.length > 0}
+          <div class={`text-sm ${isOverLimit ? 'text-red-500' : 'text-gray-500'}`}>
+            {charactersRemaining}
+          </div>
+        {/if}
+        <Button 
+          type="submit" 
+          variant="default"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-full"
+          disabled={newTweetContent.length === 0 || isOverLimit}
+        >
+          Tweet
+        </Button>
+      </div>
+    </div>
+  </form>
+</div>

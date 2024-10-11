@@ -9,6 +9,7 @@ export interface Tweet {
   likes: number;
   replies: Reply[];
   replyCount: number;
+  imageUrl?: string;
 }
 
 export interface Reply {
@@ -27,7 +28,7 @@ function createTweetStore() {
 
   return {
     subscribe,
-    addTweet: (name: string, content: string, likes: number): Tweet => {
+    addTweet: (name: string, content: string): Tweet => {
       let newTweet: Tweet;
       update(tweets => {
         newTweet = {
@@ -35,7 +36,7 @@ function createTweetStore() {
           name,
           content,
           createdAt: new Date().toISOString(),
-          likes: likes,
+          likes: 0,
           replies: [],
           replyCount: 0
         };
@@ -92,7 +93,22 @@ function createTweetStore() {
       if (storedTweets) {
         set(JSON.parse(storedTweets));
       }
-    }
+    },
+    updateTweetLikes: async (tweetId: string, tweetLikes: number) => update(tweets => {
+      const updatedTweets = tweets.map(tweet => 
+        tweet.id === tweetId ? { ...tweet, likes: tweetLikes } : tweet
+      );
+      localStorage.setItem('tweets', JSON.stringify(updatedTweets));
+      return updatedTweets;
+      }),
+
+    updateTweetImage: (tweetId: string, imageUrl: string) => update(tweets => {
+      const updatedTweets = tweets.map(tweet => 
+        tweet.id === tweetId ? { ...tweet, imageUrl } : tweet
+      );
+      localStorage.setItem('tweets', JSON.stringify(updatedTweets));
+      return updatedTweets;
+    })
   };
 }
 

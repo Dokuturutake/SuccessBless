@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import analyzeTweetPrompt from '$lib/data/prompt_eval.md?raw';
 import getResponseTweetsPrompt from '$lib/data/prompt_reply.md?raw';
 import tweetUnderstandPrompt from '$lib/data/prompt_tweet_understanding.md?raw'
-import CharacterTxt from '$lib/data/character_style_list.txt'
+import CharacterTxt from '$lib/data/character_style_list.txt?raw'
 
 interface GeminiTweet {
   username: string;
@@ -17,9 +17,9 @@ interface GeminiTweetAnalysis {
   improvement_points: string;
 }
 
-interface GeminiUnderStandTweet {
-  tweet : string;
-  prediction: string;
+interface GeminiResponse {
+  predicted_likes: number;
+  replies: GeminiTweet[];
 }
 
 interface DisplayTweet {
@@ -43,7 +43,11 @@ class GeminiApi {
 
   private getModel(modelName: string = "gemini-1.5-flash") {
     return this.genAI.getGenerativeModel({ model: modelName , generationConfig: {
-    responseMimeType: "application/json"}});
+      temperature : 2.0,
+      responseMimeType: "application/json",
+      maxOutputTokens:2048,
+      topP:0.99,
+    }});
   }
 
   private static removeSpecificStrings(text: string): string {
@@ -69,19 +73,43 @@ class GeminiApi {
     );
   }
 
-  async getResponseTweets(tweetContent: string): Promise<GeminiTweet[]> {
+  async getResponseTweets(tweetContent: string, image?: File): Promise<GeminiResponse> {
     const model = this.getModel();
     const prompt = GeminiApi.formatPrompt(generateReplyPrompt().prompt, { tweetContent });
 
     try {
-      const result = await model.generateContent(prompt);
+      let result;
+      if (image) {
+        const imageData = await this.fileToGenerativePart(image);
+        result = await model.generateContent([prompt, imageData]);
+      } else {
+        result = await model.generateContent(prompt);
+      }
       const response = await result.response;
       const text = response.text();
-      return GeminiApi.parseJsonResponse<GeminiTweet[]>(text);
+      return GeminiApi.parseJsonResponse<GeminiResponse>(text);
     } catch (error) {
       console.error('Error generating content:', error);
       throw new GeminiApiError('Failed to fetch from Gemini API');
     }
+  }
+
+  private async fileToGenerativePart(file: File): Promise<GoogleGenerativeAI.Part> {
+    const base64EncodedDataPromise = new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(file);
+    });
+
+    const base64EncodedData = await base64EncodedDataPromise;
+    const mimeType = file.type;
+
+    return {
+      inlineData: {
+        data: base64EncodedData.split(',')[1],
+        mimeType
+      }
+    };
   }
 
   async analyzeTweet(tweet: string): Promise<DisplayTweet> {
@@ -159,7 +187,8 @@ export function generateReplyPrompt() {
     // ランダムに10個のキャラクターを選択
     const selectedCharacters = [];
     const tempCharacters = [...characters];
-    while (selectedCharacters.length < 10 && tempCharacters.length > 0) {
+    const length = 15;
+    while (selectedCharacters.length < 15 && tempCharacters.length > 0) {
       const randomIndex = Math.floor(Math.random() * tempCharacters.length);
       selectedCharacters.push(tempCharacters.splice(randomIndex, 1)[0]);
     }

@@ -2,30 +2,25 @@ import { tweetStore } from "$lib/stores/tweetStore";
 import { createGeminiApi } from "$lib/utils/geminiApi";
 import { get } from "svelte/store";
 
-export async function createTweet(newTweetContent: string): Promise<string> {
-  if (newTweetContent.trim().length === 0 || newTweetContent.length > 140) {
+export async function createTweet(newTweetContent: string, image?: File): Promise<string> {
+  if (newTweetContent.trim().length === 0 || newTweetContent.length > 280) {
     return "Invalid tweet content";
   }
 
   try {
     const geminiApi = createGeminiApi();
-    const geminiAnalyze = await geminiApi.analyzeTweet(newTweetContent);
+    const geminiResponses = await geminiApi.getResponseTweets(newTweetContent, image);
     
-    const tweet = tweetStore.addTweet("User", newTweetContent, geminiAnalyze.likes);
+    const tweet = tweetStore.addTweet("User", newTweetContent);
     const tweetId = tweet.id;
-    tweetStore.addReply(tweetId, {
-      name: "tweetAdviser",
-      content: geminiAnalyze.reply,
-      likes: 0,
-    });
 
-    const geminiUnderstand = await geminiApi.understandingTweet(newTweetContent);
-    console.log(geminiUnderstand);
-    
+    tweetStore.updateTweetLikes(tweetId, geminiResponses.predicted_likes);
 
-    const geminiResponses = await geminiApi.getResponseTweets(geminiUnderstand);
-    
-    geminiResponses.forEach(response => {
+    if (image) {
+      tweetStore.updateTweetImage(tweetId, URL.createObjectURL(image));
+    }
+
+    geminiResponses.replies.forEach(response => {
       tweetStore.addReply(tweetId, {
         name: response.username,
         content: response.text,
