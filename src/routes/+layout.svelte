@@ -98,7 +98,7 @@
   </div>
 
   <!-- メインコンテンツ -->
-  <div class="flex-1 p-4 overflow-auto mt-16 md:mt-0 transition-all duration-300 ease-in-out"
+  <div class="flex-1 md:p-4 md:p-0 overflow-auto mt-16 md:mt-0 transition-all duration-300 ease-in-out"
        class:ml-0={!sidebarOpen || !isDesktop}
        class:ml-{SIDEBAR_WIDTH}px={sidebarOpen && isDesktop}>
     <slot />

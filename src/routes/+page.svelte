@@ -24,7 +24,7 @@
     <title>SUCCESSBLESS</title>
   </svelte:head>
   
-  <main class="container mx-auto px-4 py-8">
+  <main class="container mx-auto md:px-4 md:py-o px-0 py-0">
   
     {#if isLoggedIn}
       <MainFeed />

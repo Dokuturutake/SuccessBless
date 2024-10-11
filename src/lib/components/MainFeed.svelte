@@ -17,7 +17,7 @@
   });
 </script>
 
-<div class="max-w-2xl mx-auto mt-8">
+<div class="max-w-2xl mx-auto mt-4">
   <TweetForm bind:error />
   <TweetList />
 
