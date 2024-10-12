@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import MainFeed from "$lib/components/MainFeed.svelte";
     import { Button } from "$lib/components/ui/button";
+	import PrivacyPolicyDisclaimer from "$lib/components/PrivacyPolicyDisclaimer.svelte";
   
     let isLoggedIn = false;
     let username = "";
@@ -37,5 +38,6 @@
   </main>
   
   <footer class="mt-16 text-center text-gray-500">
+    <PrivacyPolicyDisclaimer/>
     <p>&copy; 2024 SUCCESSBLESS. All rights reserved.</p>
   </footer>

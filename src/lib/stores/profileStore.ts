@@ -1,37 +1,39 @@
-// src/lib/stores/profileStore.ts
-import { onMount } from 'svelte';
 import { writable } from 'svelte/store';
 
-onMount(() => {
-  const storedUsername = localStorage.getItem('username') || '';
-  const storedBio = localStorage.getItem('bio') || '';
-  const storedProfilePicture = localStorage.getItem('profilePicture') || null;
+export interface Profile {
+  name: string;
+  username: string;
+  bio: string;
+  avatarUrl: string;
+}
 
-  username.set(storedUsername);
-  bio.set(storedBio);
-  profilePicture.set(storedProfilePicture ? JSON.parse(storedProfilePicture) : null);
+const defaultProfile: Profile = {
+  name: 'ゲストユーザー',
+  username: 'guest',
+  bio: '',
+  avatarUrl: 'https://via.placeholder.com/150'
+};
 
-  username.subscribe((value) => {
-    localStorage.setItem('username', value);
-  });
+function createProfileStore() {
+  const { subscribe, set, update } = writable<Profile>(defaultProfile);
 
-  bio.subscribe((value) => {
-    localStorage.setItem('bio', value);
-  });
+  return {
+    subscribe,
+    update,
+    setProfile: (profile: Profile) => set(profile),
+    loadProfile: () => {
+      const storedProfile = localStorage.getItem('profile');
+      if (storedProfile) {
+        set(JSON.parse(storedProfile));
+      } else {
+        set(defaultProfile);
+      }
+    },
+    saveProfile: (profile: Profile) => {
+      localStorage.setItem('profile', JSON.stringify(profile));
+      set(profile);
+    },
+  };
+}
 
-  try{
-    profilePicture.subscribe((value) => {
-      localStorage.setItem('profilePicture', value ? JSON.stringify(value) : '');
-    });
-  }
-  
-});
-// ローカルストレージに保存されている値を読み込む
-
-// 各フィールドに対応するstoreを作成
-
-export const username = writable<string>('default');
-export const bio = writable<string>('');
-export const profilePicture = writable<File | null>(null);
-
-// storeの値が変更された時にlocalStorageに保存する処理を追加
+export const profileStore = createProfileStore();
