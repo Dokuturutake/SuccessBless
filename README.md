@@ -4,6 +4,8 @@
 
 SUCCESSBLESS は、AIを活用し、SNSのような感覚で目標達成をサポートするWebアプリケーションです。ユーザーは目標達成を投稿し、それに対してAIが応援コメントや評価を返します。まるでSNSで仲間と交流しているかのような感覚で、楽しく目標達成を進めることができます。
 
+[![ボタン](https://img.shields.io/badge/ボタンテキスト-blue?style=for-the-badge)](https://dokuturutake.github.io/SuccessBless/)
+
 ### 特徴
 
 - **AIフィードバック:** ユーザーの投稿に対して、AIがコメントや評価を提供します。
@@ -35,4 +37,13 @@ SUCCESSBLESSは無料で利用できます。広告もありません。GitHub P
 
 SUCCESSBLESSは、目標達成に悩むすべての人におすすめのアプリケーションです。AIの応援を受けながら、楽しく目標を達成しましょう。
 
-![使用例](readmeDatas/Images/why-image.gif)
+## ライセンス
+
+このプロジェクトは以下のライセンスの下で公開されています：
+
+- ソースコード：MIT License
+- ドキュメントおよび画像：Creative Commons Attribution 4.0 International License
+
+詳細は `LICENSE` ファイルをご覧ください。
+
+![使用例](readmeDatas/why-image.gif)
