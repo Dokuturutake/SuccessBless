@@ -52,14 +52,13 @@
     <button on:click={toggleSidebar} class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
       <LucideMenu size={24} />
     </button>
-    <div class="svg-icon bg-blue-500 h-8 w-8"></div>
+    <div class="svg-icon bg-blue-500 h-6 w-6"></div>
     <button on:click={openTweetForm} class="text-blue-500 hover:text-blue-600">
       <LucideFeather size={24} />
     </button>
   </div>
 
   <!-- サイドバー -->
-
   <div class="fixed md:static left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto z-20 transition-all duration-300 ease-in-out md:w-{SIDEBAR_WIDTH}px"
        class:w-0={!sidebarOpen}
        class:w-{SIDEBAR_WIDTH}px={sidebarOpen}
@@ -70,7 +69,7 @@
       </button>
       <nav class="space-y-6 mt-8 md:mt-0">
         <a href="{base}/" class="flex items-center space-x-3 text-xl font-bold text-blue-500">
-          <div class="h-20 w-40 svg-iconAndText bg-blue-500">
+          <div class="h-12 w-32 svg-iconAndText bg-blue-500">
           </div>
         </a>
         <a href="{base}/" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/'}>
