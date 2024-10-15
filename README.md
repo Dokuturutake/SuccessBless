@@ -1,38 +1,38 @@
-# create-svelte
+## SUCCESSBLESS
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+![使用例](readmeDatas/ai-feedback.gif)
 
-## Creating a project
+SUCCESSBLESS は、AIを活用し、SNSのような感覚で目標達成をサポートするWebアプリケーションです。ユーザーは目標達成を投稿し、それに対してAIが応援コメントや評価を返します。まるでSNSで仲間と交流しているかのような感覚で、楽しく目標達成を進めることができます。
 
-If you're seeing this, you've probably already done this step. Congrats!
+### 特徴
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- **AIフィードバック:** ユーザーの投稿に対して、AIがコメントや評価を提供します。
+- **SNSの要素:** フォロワー数、いいね、評価など、SNSでおなじみの機能を搭載しています。
+- **リアルなレスポンス生成:** Gemini APIを利用し、人間らしいフィードバックを実現しています。
+- **多様なAIキャラクター:** 様々な性格のAIキャラクターが、投稿に返信してくれます。
+- **ランダム性:** 同じ投稿でも評価が変わることがあり、ゲーム感覚で楽しめます。
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### 開発の背景
 
-## Developing
+開発者は、多くの人が仕事や目標達成に対して十分な達成感を感じられていない現状を問題視していました。そこで、SNSの中毒性に着目し、それを目標達成に活用できないかと考えました。SUCCESSBLESSは、SNSの楽しさを目標達成に結びつけることで、ユーザーがモチベーションを維持し、目標を達成できるよう支援することを目指しています。
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### 技術スタック
 
-```bash
-npm run dev
+- **フレームワーク:** Svelte
+- **API:** Gemini API, Gemini1.5Flash
+- **AI:** Claude (コーディング支援)
+- **ホスティング:** GitHub Pages
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### 利用方法
 
-## Building
+SUCCESSBLESSは無料で利用できます。広告もありません。GitHub Pagesで公開されているので、GeminiAPIキーを用意すればすぐに使い始めることができます。
 
-To create a production version of your app:
+### 今後の展望
 
-```bash
-npm run build
-```
+開発者は、今後もSUCCESSBLESSの機能追加や改良を続ける予定です。将来的には、目標達成をより効果的に支援するアプリケーションの開発も目指しています。
 
-You can preview the production build with `npm run preview`.
+### ぜひお試しください！
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+SUCCESSBLESSは、目標達成に悩むすべての人におすすめのアプリケーションです。AIの応援を受けながら、楽しく目標を達成しましょう。
+
+![使用例](readmeDatas/Images/why-image.gif)
