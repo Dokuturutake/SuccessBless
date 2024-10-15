@@ -112,16 +112,16 @@
 
 <style>
   .svg-icon {
-  -webkit-mask: url(SuccessBlessIcon.svg) no-repeat center / contain;
-  mask: url(SuccessBlessIcon.svg) no-repeat center / contain;
+  -webkit-mask: url(/SuccessBlessIcon.svg) no-repeat center / contain;
+  mask: url(/SuccessBlessIcon.svg) no-repeat center / contain;
 }
   .svg-text {
-  -webkit-mask: url(SuccessBlessString.svg) no-repeat center / contain;
-  mask: url(SuccessBlessString.svg) no-repeat center / contain;
+  -webkit-mask: url(/SuccessBlessString.svg) no-repeat center / contain;
+  mask: url(/SuccessBlessString.svg) no-repeat center / contain;
 }
 
 .svg-iconAndText {
-  -webkit-mask: url(SuccessBlessIconAndString.svg) no-repeat center / contain;
-  mask: url(SuccessBlessIconAndString.svg) no-repeat center / contain;
+  -webkit-mask: url(/SuccessBlessIconAndString.svg) no-repeat center / contain;
+  mask: url(/SuccessBlessIconAndString.svg) no-repeat center / contain;
 }
 </style>
