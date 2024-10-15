@@ -1,10 +1,11 @@
 ## SUCCESSBLESS
 
+![使用例](readmeDatas/SuccessBlessIconAndString.svg)
 ![使用例](readmeDatas/ai-feedback.gif)
 
 SUCCESSBLESS は、AIを活用し、SNSのような感覚で目標達成をサポートするWebアプリケーションです。ユーザーは目標達成を投稿し、それに対してAIが応援コメントや評価を返します。まるでSNSで仲間と交流しているかのような感覚で、楽しく目標達成を進めることができます。
 
-[![ボタン](https://img.shields.io/badge/ボタンテキスト-blue?style=for-the-badge)](https://dokuturutake.github.io/SuccessBless/)
+[![ボタン](https://img.shields.io/badge/Play-blue?style=for-the-badge)](https://dokuturutake.github.io/SuccessBless/)
 
 ### 特徴
 

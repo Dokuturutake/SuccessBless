@@ -2,16 +2,16 @@ import { tweetStore } from "$lib/stores/tweetStore";
 import { createGeminiApi } from "$lib/utils/geminiApi";
 import { get } from "svelte/store";
 
-export async function createTweet(newTweetContent: string, image?: File): Promise<string> {
+export async function createTweet(newTweetContent: string, name: string, image?: File): Promise<string> {
   if (newTweetContent.trim().length === 0 || newTweetContent.length > 280) {
     return "Invalid tweet content";
   }
 
   try {
     const geminiApi = createGeminiApi();
-    const geminiResponses = await geminiApi.getResponseTweets(newTweetContent, image);
+    const geminiResponses = await geminiApi.getResponseTweets(`{username:${name}, tweet:${newTweetContent}}`, image);
     
-    const tweet = tweetStore.addTweet("User", newTweetContent);
+    const tweet = tweetStore.addTweet(name, newTweetContent);
     const tweetId = tweet.id;
 
     tweetStore.updateTweetLikes(tweetId, geminiResponses.predicted_likes);

@@ -57,6 +57,7 @@ class GeminiApi {
   }
 
   private static parseJsonResponse<T>(text: string): T {
+    
     const jsonText = GeminiApi.removeSpecificStrings(text);
     try {
       return JSON.parse(jsonText) as T;
@@ -75,7 +76,9 @@ class GeminiApi {
 
   async getResponseTweets(tweetContent: string, image?: File): Promise<GeminiResponse> {
     const model = this.getModel();
+    console.log(tweetContent);
     const prompt = GeminiApi.formatPrompt(generateReplyPrompt().prompt, { tweetContent });
+    
 
     try {
       let result;
@@ -87,6 +90,7 @@ class GeminiApi {
       }
       const response = await result.response;
       const text = response.text();
+      
       return GeminiApi.parseJsonResponse<GeminiResponse>(text);
     } catch (error) {
       console.error('Error generating content:', error);

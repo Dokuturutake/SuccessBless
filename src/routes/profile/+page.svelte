@@ -29,16 +29,8 @@
   <h1 class="text-2xl font-bold mb-6 dark:text-white">プロフィール</h1>
   <div class="space-y-4">
     <div>
-      <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">名前</label>
-      <Input type="text" id="name" bind:value={profile.name} class="mt-1" />
-    </div>
-    <div>
       <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">ユーザー名</label>
       <Input type="text" id="username" bind:value={profile.username} class="mt-1" />
-    </div>
-    <div>
-      <label for="bio" class="block text-sm font-medium text-gray-700 dark:text-gray-300">自己紹介</label>
-      <Textarea id="bio" bind:value={profile.bio} class="mt-1" />
     </div>
     <div>
       <label for="avatarUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-300">アバター画像URL</label>

@@ -13,10 +13,13 @@
     apiKey = value;
   });
 
-  function setApiKey() {
+  function setApiKey(apiKey: string) {
     apiKeyStore.setApiKey(apiKey);
     error = "";
   }
+
+  $: setApiKey(apiKey);
+
 
   function togglePasswordVisibility() {
     showPassword = !showPassword;
@@ -40,7 +43,6 @@
     </Button>
 
   </div>
-  <Button on:click={setApiKey}>Set API Key</Button>
 </div>
 
 {#if error}

@@ -6,8 +6,16 @@
   import { Image, Smile, Calendar, MapPin, X } from 'lucide-svelte';
   import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "$lib/components/ui/dialog";
   import { createEventDispatcher } from 'svelte';
+	import { profileStore } from "$lib/stores/profileStore";
+	import { get } from "svelte/store";
+
+  let name = get(profileStore).name;
+  profileStore.subscribe(profile => {
+    name = profile.name;
+  });
 
   const dispatch = createEventDispatcher();
+  let isImageDialogOpen = false;
 
   function handleClick() {
     dispatch('reply', { message: 'Replyボタンがクリックされました' });
@@ -26,7 +34,7 @@
   async function handleCreateTweet() {
     handleClick();
 
-    error = await createTweet(newTweetContent, selectedImage);
+    error = await createTweet(newTweetContent, name , selectedImage);
     if (!error) {
       newTweetContent = "";
       selectedImage = null;
@@ -46,6 +54,8 @@
       selectedImage = input.files[0];
       imagePreviewUrl = URL.createObjectURL(selectedImage);
     }
+
+    isImageDialogOpen = false;
   }
 
   function removeImage() {
@@ -85,7 +95,7 @@
 
     <div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-3">
       <div class="flex space-x-4">
-        <Dialog>
+        <Dialog bind:open={isImageDialogOpen}>
           <DialogTrigger>
             <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 p-2" title="Media">
               <Image size={20} />
@@ -99,7 +109,7 @@
                 画像はAIに送信され分析されます。公開しても問題ない内容のみをアップロードしてください。
               </DialogDescription>
             </DialogHeader>
-            <input type="file" accept="image/*" on:change={handleImageSelect} class="mt-4 dark:text-gray-300" />
+            <input type="file" accept="image/jpeg, image/png, image/webp, image/heic, image/heif" on:change={handleImageSelect} class="mt-4 dark:text-gray-300" />
           </DialogContent>
         </Dialog>
         <Button variant="ghost" class="text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 p-2" title="GIF">

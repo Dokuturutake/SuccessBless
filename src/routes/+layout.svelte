@@ -52,7 +52,7 @@
     <button on:click={toggleSidebar} class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
       <LucideMenu size={24} />
     </button>
-    <div class="text-xl font-bold text-blue-500">SUCCESSBLESS</div>
+    <div class="svg-icon bg-blue-500 h-8 w-8"></div>
     <button on:click={openTweetForm} class="text-blue-500 hover:text-blue-600">
       <LucideFeather size={24} />
     </button>
@@ -69,10 +69,9 @@
         <LucideX size={24} />
       </button>
       <nav class="space-y-6 mt-8 md:mt-0">
-        <a href="/" class="flex items-center space-x-3 text-xl font-bold text-blue-500">
-          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-          </svg>
-          <span>SUCCESSBLESS</span>
+        <a href="{base}/" class="flex items-center space-x-3 text-xl font-bold text-blue-500">
+          <div class="h-20 w-40 svg-iconAndText bg-blue-500">
+          </div>
         </a>
         <a href="{base}/" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/'}>
           <LucideHome size={24} />
@@ -81,10 +80,6 @@
         <a href="{base}/profile" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/profile'}>
           <LucideUser size={24} />
           <span>プロフィール</span>
-        </a>
-        <a href="{base}/notifications" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/notifications'}>
-          <LucideBell size={24} />
-          <span>通知</span>
         </a>
         <a href="{base}/settings" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/settings'}>
           <LucideSettings size={24} />
@@ -116,5 +111,17 @@
 
 
 <style>
-  /* スタイルは必要に応じて調整してください */
+  .svg-icon {
+  -webkit-mask: url(SuccessBlessIcon.svg) no-repeat center / contain;
+  mask: url(SuccessBlessIcon.svg) no-repeat center / contain;
+}
+  .svg-text {
+  -webkit-mask: url(SuccessBlessString.svg) no-repeat center / contain;
+  mask: url(SuccessBlessString.svg) no-repeat center / contain;
+}
+
+.svg-iconAndText {
+  -webkit-mask: url(SuccessBlessIconAndString.svg) no-repeat center / contain;
+  mask: url(SuccessBlessIconAndString.svg) no-repeat center / contain;
+}
 </style>
