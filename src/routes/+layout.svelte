@@ -67,9 +67,10 @@
       <button on:click={toggleSidebar} class="md:hidden absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
         <LucideX size={24} />
       </button>
+      <div class="w-[15vw]"></div>
       <nav class="space-y-6 mt-8 md:mt-0">
-        <a href="{base}/" class="flex items-center space-x-3 text-xl font-bold text-blue-500">
-          <div class="h-12 w-32 svg-iconAndText bg-blue-500">
+        <a href="{base}/" class="flex items-center space-x-3 text-xl font-bold text-blue-500 w-">
+          <div class="h-auto w-full svg-iconAndText bg-blue-500 m-0">
           </div>
         </a>
         <a href="{base}/" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/'}>
@@ -120,7 +121,14 @@
 }
 
 .svg-iconAndText {
-  -webkit-mask: url(/SuccessBlessIconAndString.svg) no-repeat center / contain;
-  mask: url(/SuccessBlessIconAndString.svg) no-repeat center / contain;
+  -webkit-mask-image: url(/SuccessBlessIconAndString.svg);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: url(/SuccessBlessIconAndString.svg);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  aspect-ratio: 15 / 6;
 }
 </style>
