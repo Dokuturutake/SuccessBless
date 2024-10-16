@@ -9,11 +9,6 @@
 	import { profileStore } from "$lib/stores/profileStore";
 	import { get } from "svelte/store";
 
-  let name = get(profileStore).name;
-  profileStore.subscribe(profile => {
-    name = profile.name;
-  });
-
   const dispatch = createEventDispatcher();
   let isImageDialogOpen = false;
 
@@ -24,8 +19,9 @@
   let newTweetContent = "";
   let apiKey = "";
   let charLimit = 280;
-  let selectedImage: File | null = null;
+  let selectedImage: File | undefined = undefined;
   let imagePreviewUrl = "";
+  let creatingTweet = false;
 
   apiKeyStore.subscribe(value => {
     apiKey = value;
@@ -34,12 +30,17 @@
   async function handleCreateTweet() {
     handleClick();
 
+    creatingTweet = true;
+
+    let name = get(profileStore).name;
+
     error = await createTweet(newTweetContent, name , selectedImage);
     if (!error) {
       newTweetContent = "";
-      selectedImage = null;
+      selectedImage = undefined;
       imagePreviewUrl = "";
     }
+    creatingTweet = false;
   }
 
   function handleKeyDown(event: KeyboardEvent) {
@@ -59,7 +60,7 @@
   }
 
   function removeImage() {
-    selectedImage = null;
+    selectedImage = undefined;
     imagePreviewUrl = "";
   }
 
@@ -136,7 +137,7 @@
           type="submit" 
           variant="default"
           class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-full dark:bg-blue-600 dark:hover:bg-blue-700"
-          disabled={newTweetContent.length === 0 || isOverLimit}
+          disabled={newTweetContent.length === 0 || isOverLimit || creatingTweet}
         >
           投稿
         </Button>

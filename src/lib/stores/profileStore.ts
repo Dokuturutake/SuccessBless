@@ -2,19 +2,16 @@ import { writable } from 'svelte/store';
 
 export interface Profile {
   name: string;
-  username: string;
-  bio: string;
   avatarUrl: string;
 }
 
 const defaultProfile: Profile = {
   name: 'ゲストユーザー',
-  username: 'guest',
-  bio: '',
   avatarUrl: 'https://via.placeholder.com/150'
 };
 
 function createProfileStore() {
+
   const { subscribe, set, update } = writable<Profile>(defaultProfile);
 
   return {

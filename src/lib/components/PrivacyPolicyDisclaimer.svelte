@@ -14,19 +14,20 @@
     <DialogDescription>
       <div class="space-y-4">
         <h2 class="text-lg font-semibold">Privacy Policy</h2>
-        <p>This application does not collect or store any personal data on our servers. All user data, including posts and API keys, are stored locally in your browser's Local Storage.</p>
-        <p>We use the Gemini API for generating responses. Your post content is sent to the Gemini API for processing. Please be aware that any information you post may be processed by the Gemini API.</p>
+        <p>このアプリケーションは、当社のサーバー上で個人データを収集または保存することはありません。すべてのユーザーデータ、投稿およびAPIキーは、ブラウザのローカルストレージに保存されます。</p>
+        <p>返信を生成するためにGemini APIを使用しています。投稿内容は処理のためにGemini APIに送信されます。投稿した情報がGemini APIによって処理される可能性があることにご注意ください。</p>
+        
 
         <h2 class="text-lg font-semibold">Disclaimer</h2>
         <ul class="list-disc pl-5 space-y-2">
-          <li>This application is currently in development and may be unstable.</li>
-          <li>We are not responsible for any content posted or replies generated through this application.</li>
-          <li>The Gemini API is used for generating responses, and we do not control or guarantee the accuracy or appropriateness of these responses.</li>
-          <li>By using this application, you agree not to post any sensitive or personal information.</li>
-          <li>We reserve the right to modify or discontinue this service at any time without notice.</li>
+          <li>このアプリケーションは現在開発中であり、不安定になる可能性があります。</li>
+          <li>このアプリケーションを通じて投稿されたコンテンツや生成された返信に関して、当社は一切の責任を負いません。</li>
+          <li>Gemini APIは返信を生成するために使用されており、その返信の正確性や適切性を当社は管理または保証しません。</li>
+          <li>このアプリケーションを使用することにより、機密情報や個人情報を投稿しないことに同意したものとみなされます。</li>
+          <li>当社は予告なしに本サービスを変更または中止する権利を留保します。</li>
         </ul>
 
-        <p class="font-semibold">By using this application, you acknowledge that you have read and understood this Privacy Policy and Disclaimer.</p>
+        <p class="font-semibold">本アプリケーションを使用することにより、お客様は本プライバシーポリシーおよび免責事項を読み、理解したものとみなされます。</p>
       </div>
     </DialogDescription>
   </DialogContent>

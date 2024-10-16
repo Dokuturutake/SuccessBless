@@ -11,6 +11,7 @@
   onMount(() => {
     profileStore.loadProfile();
     profileStore.subscribe(value => {
+      console.log(value);
       profile = value;
       isLoading=false;
     });

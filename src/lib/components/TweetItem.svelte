@@ -4,6 +4,7 @@
   import { handleLikeTweet, handleLikeReply } from "$lib/utils/likeActions";
   import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "$lib/components/ui/collapsible";
   import { Heart, MessageCircle, Repeat2, Share } from 'lucide-svelte';
+	import { onMount } from "svelte";
 
   export let tweet: Tweet;
 
@@ -33,6 +34,31 @@
       return `${tweetDate.toLocaleString('default', { month: 'short' })} ${tweetDate.getDate()}`;
     }
   }
+  let imageLoaded = false;
+  let imageLoadError = false;
+
+  function preloadImage(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        imageLoaded = true;
+        resolve();
+      };
+      img.onerror = () => {
+        imageLoadError = true;
+        reject();
+      };
+      img.src = src;
+    });
+  }
+
+    onMount(() => {
+    if (tweet.imageUrl) {
+      preloadImage(tweet.imageUrl).catch(() => {
+        // エラーハンドリングはすでにpreloadImage内で行われています
+      });
+    }
+  });
 </script>
 
 <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
@@ -49,10 +75,21 @@
       
       <!-- 画像の表示 -->
       {#if tweet.imageUrl}
-        <div class="mt-3 rounded-2xl overflow-hidden">
-          <img src={tweet.imageUrl} alt="Tweet image" class="w-full h-auto object-cover">
-        </div>
+        {#if imageLoaded}
+          <div class="mt-3 rounded-2xl overflow-hidden">
+            <img 
+              src={tweet.imageUrl} 
+              alt="" 
+              class="w-full h-auto object-cover"
+            >
+          </div>
+        {:else if imageLoadError}
+          <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm">画像はページを変えると自動で削除されます。</p>
+        {:else}
+          <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm">画像を読み込み中...</p>
+        {/if}
       {/if}
+   
 
       <div class="mt-3 flex items-center justify-between text-gray-500 dark:text-gray-400">
         <Button variant="ghost" class="hover:text-blue-500 p-2" on:click={toggleReplies}>

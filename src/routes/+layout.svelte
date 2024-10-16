@@ -103,7 +103,7 @@
 
 <!-- ツイートダイアログ -->
 <Dialog bind:open={tweetDialogOpen}>
-  <DialogContent>
+  <DialogContent class="dark:bg-gray-800 dark:text-white">
     <TweetForm on:reply={closeTweetForm}/>
   </DialogContent>
 </Dialog>
