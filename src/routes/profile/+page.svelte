@@ -31,7 +31,7 @@
   <div class="space-y-4">
     <div>
       <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">ユーザー名</label>
-      <Input type="text" id="username" bind:value={profile.username} class="mt-1" />
+      <Input type="text" id="username" bind:value={profile.name} class="mt-1" />
     </div>
     <div>
       <label for="avatarUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-300">アバター画像URL</label>

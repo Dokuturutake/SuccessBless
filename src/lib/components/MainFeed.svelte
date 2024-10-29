@@ -9,6 +9,8 @@
   import { apiKeyStore } from "$lib/stores/apiKeyStore";
   import { startRandomLikeIncrease } from "$lib/utils/likeSimulator";
   import { LucideSettings } from "lucide-svelte";
+	import { profileStore } from "$lib/stores/profileStore";
+	import { get } from "svelte/store";
 
   let error = "";
   let isApiKeyModalOpen = false;
@@ -16,7 +18,14 @@
   onMount(() => {
     tweetStore.loadTweets();
     apiKeyStore.loadApiKey();
+    profileStore.loadProfile();
     startRandomLikeIncrease();
+    
+    console.log(get(profileStore));
+    
+    if(get(apiKeyStore) == ""){
+      isApiKeyModalOpen = true;
+    }
   });
 
   function handleReply() {
