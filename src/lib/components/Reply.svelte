@@ -18,6 +18,7 @@
     onReply(tweetId, replyContent);
     toggleReply();
   }
+
 </script>
 
 <div>

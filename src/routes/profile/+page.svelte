@@ -33,10 +33,6 @@
       <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">ユーザー名</label>
       <Input type="text" id="username" bind:value={profile.name} class="mt-1" />
     </div>
-    <div>
-      <label for="avatarUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-300">アバター画像URL</label>
-      <Input type="text" id="avatarUrl" bind:value={profile.avatarUrl} class="mt-1" />
-    </div>
     <Button on:click={handleSave}>保存</Button>
   </div>
 </div>

@@ -70,7 +70,7 @@ function createTweetStore() {
     }),
     likeTweet: (tweetId: string) => update(tweets => {
       const updatedTweets = tweets.map(tweet => 
-        tweet.id === tweetId ? { ...tweet, likes: tweet.likes + 1 } : tweet
+        tweet.id === tweetId ? { ...tweet, likes: Number(tweet.likes) + 1 } : tweet
       );
       localStorage.setItem('tweets', JSON.stringify(updatedTweets));
       return updatedTweets;

@@ -134,17 +134,6 @@
                   <span class="text-gray-500 dark:text-gray-400 text-[14px]">{formatDate(reply.createdAt)}</span>
                 </div>
                 <p class="mt-1 text-[14px] leading-normal dark:text-white">{reply.content}</p>
-                <div class="mt-2 flex items-center space-x-4 text-gray-500 dark:text-gray-400">
-                  <Button 
-                    variant="ghost" 
-                    class="hover:text-red-500 p-1" 
-                    on:click={() => handleLikeReply(tweet.id, reply.id, likedReplies, tweetStore)} 
-                    disabled={likedReplies.has(`${tweet.id}-${reply.id}`)}
-                  >
-                    <Heart size={16} fill={likedReplies.has(`${tweet.id}-${reply.id}`) ? "currentColor" : "none"} />
-                    <span class="ml-1 text-xs">{formatCount(reply.likes)}</span>
-                  </Button>
-                </div>
               </div>
             </div>
           {/each}

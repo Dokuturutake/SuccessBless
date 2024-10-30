@@ -20,13 +20,15 @@ export async function createTweet(newTweetContent: string, name: string, image?:
       tweetStore.updateTweetImage(tweetId, URL.createObjectURL(image));
     }
 
-    geminiResponses.replies.forEach(response => {
-      tweetStore.addReply(tweetId, {
-        name: response.username,
-        content: response.text,
-        likes: 0,
-      });
+    if(geminiResponses.replies){
+      geminiResponses.replies.forEach(response => {
+        tweetStore.addReply(tweetId, {
+          name: response.username,
+          content: response.text,
+          likes: 0,
+        });
     });
+    }
 
     return "";
   } catch (error) {
