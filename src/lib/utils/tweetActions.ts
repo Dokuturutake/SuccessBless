@@ -11,14 +11,8 @@ export async function createTweet(newTweetContent: string, name: string, image?:
     const geminiApi = createGeminiApi();
     const geminiResponses = await geminiApi.getResponseTweets(`{username:${name}, tweet:${newTweetContent}}`, image);
     
-    const tweet = tweetStore.addTweet(name, newTweetContent);
+    const tweet = await tweetStore.addTweet(name, newTweetContent,  geminiResponses.predicted_likes,image);
     const tweetId = tweet.id;
-
-    tweetStore.updateTweetLikes(tweetId, geminiResponses.predicted_likes);
-
-    if (image) {
-      tweetStore.updateTweetImage(tweetId, URL.createObjectURL(image));
-    }
 
     if(geminiResponses.replies){
       geminiResponses.replies.forEach(response => {

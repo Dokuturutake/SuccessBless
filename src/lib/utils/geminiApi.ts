@@ -1,10 +1,11 @@
 import { get } from 'svelte/store';
 import { apiKeyStore } from '$lib/stores/apiKeyStore';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import analyzeTweetPrompt from '$lib/data/prompt_eval.md?raw';
 import getResponseTweetsPrompt from '$lib/data/prompt_reply.md?raw';
 import tweetUnderstandPrompt from '$lib/data/prompt_tweet_understanding.md?raw'
 import CharacterTxt from '$lib/data/character_style_list.txt?raw'
+import { Description } from '$lib/components/ui/alert';
 
 interface GeminiTweet {
   username: string;
@@ -34,6 +35,34 @@ class GeminiApiError extends Error {
   }
 }
 
+const schema = {
+  type: SchemaType.OBJECT,
+  properties: {
+    predicted_likes: {
+      type: SchemaType.NUMBER,
+      description: "予測されるいいね数",
+    },
+    replies: {
+      type: SchemaType.ARRAY,
+      items: {
+        type: SchemaType.OBJECT,
+        properties: {
+          username: {
+            type: SchemaType.STRING,
+            description: "ユーザー名",
+          },
+          text: {
+            type: SchemaType.STRING,
+            description: "返信テキスト",
+          },
+        },
+        required: ["username", "text"],
+      },
+    },
+  },
+  required: ["predicted_likes", "replies"],
+};
+
 class GeminiApi {
   private genAI: GoogleGenerativeAI;
 
@@ -60,6 +89,7 @@ class GeminiApi {
     
     const jsonText = GeminiApi.removeSpecificStrings(text);
     try {
+      console.log(jsonText);
       return JSON.parse(jsonText) as T;
     } catch (error) {
       console.error('Error parsing JSON response:', error);
@@ -192,7 +222,7 @@ export function generateReplyPrompt() {
     const selectedCharacters = [];
     const tempCharacters = [...characters];
     const length = 15;
-    while (selectedCharacters.length < 15 && tempCharacters.length > 0) {
+    while (selectedCharacters.length < length && tempCharacters.length > 0) {
       const randomIndex = Math.floor(Math.random() * tempCharacters.length);
       selectedCharacters.push(tempCharacters.splice(randomIndex, 1)[0]);
     }

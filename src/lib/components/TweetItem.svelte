@@ -4,7 +4,7 @@
   import { handleLikeTweet, handleLikeReply } from "$lib/utils/likeActions";
   import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "$lib/components/ui/collapsible";
   import { Heart, MessageCircle, Repeat2, Share } from 'lucide-svelte';
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 
   export let tweet: Tweet;
 
@@ -51,13 +51,13 @@
       img.src = src;
     });
   }
+  
+  let imageUrl;
+  $: imageUrl = tweetStore.getImageUrl(tweet);
 
-    onMount(() => {
-    if (tweet.imageUrl) {
-      preloadImage(tweet.imageUrl).catch(() => {
-        // エラーハンドリングはすでにpreloadImage内で行われています
-      });
-    }
+
+  onDestroy(() => {
+    tweetStore.cleanupImageUrl(tweet.id);
   });
 </script>
 
@@ -74,20 +74,14 @@
       <p class="mt-1 text-[15px] leading-normal dark:text-white">{tweet.content}</p>
       
       <!-- 画像の表示 -->
-      {#if tweet.imageUrl}
-        {#if imageLoaded}
+      {#if imageUrl}
           <div class="mt-3 rounded-2xl overflow-hidden">
             <img 
-              src={tweet.imageUrl} 
+              src={imageUrl} 
               alt="" 
               class="w-full h-auto object-cover"
             >
           </div>
-        {:else if imageLoadError}
-          <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm">画像はページを変えると自動で削除されます。</p>
-        {:else}
-          <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm">画像を読み込み中...</p>
-        {/if}
       {/if}
    
 

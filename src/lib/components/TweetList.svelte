@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { tweetStore, type Tweet } from "$lib/stores/tweetStore";
+  import { tweetStore} from "$lib/stores/tweetStore";
+	import type { Tweet } from "$lib/types/tweet";
   import TweetItem from "./TweetItem.svelte";
 
   let tweets: Tweet[] = [];

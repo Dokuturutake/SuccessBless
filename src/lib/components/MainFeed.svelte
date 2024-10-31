@@ -5,7 +5,7 @@
   import ApiKeyInput from "$lib/components/ApiKeyInput.svelte";
   import ApiKeyModal from "$lib/components/ApiKeyModal.svelte";
   import PrivacyPolicyDisclaimer from "$lib/components/PrivacyPolicyDisclaimer.svelte";
-  import { tweetStore, type Tweet } from "$lib/stores/tweetStore";
+  import { tweetStore} from "$lib/stores/tweetStore";
   import { apiKeyStore } from "$lib/stores/apiKeyStore";
   import { startRandomLikeIncrease } from "$lib/utils/likeSimulator";
   import { LucideSettings } from "lucide-svelte";
@@ -13,6 +13,7 @@
 	import { get } from "svelte/store";
 	import UserProfileCard from "./UserProfileCard.svelte";
 	import { validate } from "uuid";
+	import type { Tweet } from "$lib/types/tweet";
 
   let error = "";
   let isApiKeyModalOpen = false;
@@ -26,7 +27,7 @@
   export let totalComments = 0;
 
   onMount(() => {
-    tweetStore.loadTweets();
+    tweetStore.init();
     apiKeyStore.loadApiKey();
     profileStore.loadProfile();
     startRandomLikeIncrease();
