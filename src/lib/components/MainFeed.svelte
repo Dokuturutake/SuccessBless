@@ -27,10 +27,6 @@
   export let totalComments = 0;
 
   onMount(() => {
-    tweetStore.init();
-    apiKeyStore.loadApiKey();
-    profileStore.loadProfile();
-    startRandomLikeIncrease();
     
     console.log(get(profileStore));
     

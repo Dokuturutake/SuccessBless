@@ -1,6 +1,6 @@
 <script lang="ts">
   import "../app.css";
-  import { LucideSettings, LucideHome, LucideUser, LucideBell, LucideFeather, LucideMenu, LucideX } from "lucide-svelte";
+  import {LucideMedal, LucideSettings, LucideHome, LucideUser, LucideBell, LucideFeather, LucideMenu, LucideX } from "lucide-svelte";
   import { page } from '$app/stores';
   import { slide } from 'svelte/transition';
   import { tweened } from 'svelte/motion';
@@ -10,6 +10,11 @@
   import { onMount } from 'svelte';
 	import ApiKeyInput from "$lib/components/ApiKeyInput.svelte";
 	import { base } from "$app/paths";
+	import { tweetStore } from "$lib/stores/tweetStore";
+	import { apiKeyStore } from "$lib/stores/apiKeyStore";
+	import { profileStore } from "$lib/stores/profileStore";
+	import { startRandomLikeIncrease } from "$lib/utils/likeSimulator";
+	import { achievementStore } from "$lib/stores/achievementStore";
 
   let sidebarOpen = false;
   let tweetDialogOpen = false;
@@ -17,7 +22,7 @@
 
   const SIDEBAR_WIDTH = 256; // サイドバーの幅を定数として定義
 
-  onMount(() => {
+  onMount(async() => {
     const mediaQuery = window.matchMedia('(min-width: 768px)');
     isDesktop = mediaQuery.matches;
     sidebarOpen = isDesktop;
@@ -25,6 +30,12 @@
       isDesktop = e.matches;
       sidebarOpen = isDesktop;
     });
+
+    apiKeyStore.loadApiKey();
+    profileStore.loadProfile();
+    startRandomLikeIncrease();
+    achievementStore.init();
+    await tweetStore.init();
   });
 
   function toggleSidebar() {
@@ -80,6 +91,10 @@
         <a href="{base}/profile" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/profile'}>
           <LucideUser size={24} />
           <span>プロフィール</span>
+        </a>
+        <a href="{base}/achievements" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/achievements'}>
+          <LucideMedal size={24} />
+          <span>実績</span>
         </a>
         <a href="{base}/settings" on:click={closeSidebarIfMobile} class="flex items-center space-x-3 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400" class:text-blue-500={$page.url.pathname === '/settings'}>
           <LucideSettings size={24} />

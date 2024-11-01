@@ -5,6 +5,7 @@
     import { Alert, AlertDescription } from "$lib/components/ui/alert";
     import { dbService } from '$lib/db/databaseService';
     import { base } from "$app/paths";
+	import { achievementDbService } from "$lib/db/achievementService";
   
     let darkMode = false;
     let notifications = true;
@@ -19,6 +20,7 @@
       if (confirm("本当にすべてのデータを削除しますか？この操作は元に戻せません。")) {
         localStorage.clear();
         dbService.deleteDatabase();
+        achievementDbService.deleteDatabase();
         alert("すべてのデータが削除されました。ページをリロードします。");
         window.location.reload();
       }

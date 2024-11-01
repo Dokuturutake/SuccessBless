@@ -43,6 +43,7 @@ function createTweetStore() {
       try {
         await dbService.init();
         const tweets = await dbService.getAllTweets();
+        tweets.sort((a,b) => b.createdAt.localeCompare(a.createdAt));
         set(tweets.slice(0, TWEET_LIMIT));
       } catch (error) {
         console.error('Failed to initialize tweet store:', error);
