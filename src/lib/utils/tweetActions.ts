@@ -13,6 +13,7 @@ export async function createTweet(newTweetContent: string, name: string, image?:
     
     const tweet = await tweetStore.addTweet(name, newTweetContent,  geminiResponses.predicted_likes,image);
     const tweetId = tweet.id;
+    const PictureMax = 43;
 
     if(geminiResponses.replies){
       geminiResponses.replies.forEach(response => {
@@ -20,6 +21,7 @@ export async function createTweet(newTweetContent: string, name: string, image?:
           name: response.username,
           content: response.text,
           likes: 0,
+          imagenum:getRandomInt(PictureMax),
         });
     });
     }
@@ -29,4 +31,8 @@ export async function createTweet(newTweetContent: string, name: string, image?:
     console.error("Error in createTweet:", error);
     return error instanceof Error ? error.message : "An unknown error occurred";
   }
+}
+
+function getRandomInt(max: number): number {
+  return Math.floor(Math.random() * (max + 1));
 }

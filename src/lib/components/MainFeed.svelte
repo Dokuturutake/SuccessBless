@@ -19,20 +19,18 @@
   let isApiKeyModalOpen = false;
   
   export let username = "";
-  export let avatarUrl = "https://via.placeholder.com/100";
+  export let avatarUrl = "/userImage/0.webp";
   export let bio = "";
   export let joinDate = new Date();
   export let totalLikes = 0;
   export let totalPosts = 0;
   export let totalComments = 0;
 
-  onMount(() => {
-    
-    console.log(get(profileStore));
-    
-    if(get(apiKeyStore) == ""){
-      isApiKeyModalOpen = true;
-    }
+  
+  apiKeyStore.onApiKeyLoad(value =>{
+      if(value == ""){
+        isApiKeyModalOpen = true;
+      }
   });
 
   function handleReply() {
@@ -41,14 +39,13 @@
     }
   }
   
-  profileStore.subscribe(value => {
-    username = value.name;
-  });
-  
-  tweetStore.subscribe(value => {
-    totalPosts = value.length;
-    totalLikes = calculateTotalLikes(value);
-    totalComments = calculateTotalComments(value);
+  onMount(()=>{
+
+    tweetStore.subscribe(value => {
+      totalPosts = value.length;
+      totalLikes = calculateTotalLikes(value);
+      totalComments = calculateTotalComments(value);
+    });
   });
   
 
@@ -63,7 +60,7 @@
 </script>
 
 <div class="max-w-2xl mx-auto mt-0 md:mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-  <UserProfileCard  displayName={username} totalPosts={totalPosts} totalLikes={totalLikes} totalComments={totalComments}/>
+  <UserProfileCard avatarUrl={$profileStore?.avatarUrl || avatarUrl} displayName={$profileStore?.name} totalPosts={totalPosts} totalLikes={totalLikes} totalComments={totalComments}/>
   <TweetForm bind:error on:reply={handleReply} />
   <TweetList />
 </div>

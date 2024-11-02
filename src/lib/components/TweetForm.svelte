@@ -12,6 +12,8 @@
   const dispatch = createEventDispatcher();
   let isImageDialogOpen = false;
 
+  let avatarUrl = "/userImage/0.webp";
+
   function handleClick() {
     dispatch('reply', { message: 'Replyボタンがクリックされました' });
   }
@@ -63,6 +65,7 @@
     selectedImage = undefined;
     imagePreviewUrl = "";
   }
+  
 
   $: charactersRemaining = charLimit - newTweetContent.length;
   $: isOverLimit = charactersRemaining < 0;
@@ -71,7 +74,7 @@
 <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
   <form on:submit|preventDefault={handleCreateTweet} class="space-y-4">
     <div class="flex items-start space-x-4">
-      <img src="https://via.placeholder.com/48" alt="Profile" class="w-12 h-12 rounded-full">
+      <img src="{$profileStore?.avatarUrl || avatarUrl}" alt="Profile" class="w-12 h-12 rounded-full">
       <Textarea
         bind:value={newTweetContent}
         placeholder="今何をしていますか？"

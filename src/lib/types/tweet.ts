@@ -18,4 +18,5 @@ export interface Reply {
   likes: number;
   style?: string;
   hashtags?: string[];
+  imagenum?: number;
 }

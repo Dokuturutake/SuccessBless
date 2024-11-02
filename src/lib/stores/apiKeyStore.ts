@@ -20,6 +20,12 @@ function createApiKeyStore() {
           set(apiKey);
         }
       }
+    },
+    
+        // コールバック登録機能を追加
+    onApiKeyLoad: (callback: (apiKey: string) => void) => {
+      apiKeyDB.addCallback(callback);
+      return () => apiKeyDB.removeCallback(callback); // クリーンアップ関数を返す
     }
   };
 }

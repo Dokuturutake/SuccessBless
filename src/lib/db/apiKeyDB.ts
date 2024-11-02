@@ -3,9 +3,28 @@ const DB_NAME = 'ApiKeyDB';
 const STORE_NAME = 'apiKeys';
 const DB_VERSION = 1;
 
+// コールバック関数の型定義
+type ApiKeyCallback = (apiKey: string) => void;
+
 // IndexedDBのラッパークラス
 class ApiKeyDB {
   private db: IDBDatabase | null = null;
+  private callbacks: Set<ApiKeyCallback> = new Set();
+
+  // コールバック関数を登録
+  addCallback(callback: ApiKeyCallback): void {
+    this.callbacks.add(callback);
+  }
+
+  // コールバック関数を削除
+  removeCallback(callback: ApiKeyCallback): void {
+    this.callbacks.delete(callback);
+  }
+
+  // 全てのコールバックを実行
+  private executeCallbacks(apiKey: string): void {
+    this.callbacks.forEach(callback => callback(apiKey));
+  }
 
   // データベースを開く/作成する
   async init(): Promise<void> {
@@ -36,7 +55,10 @@ class ApiKeyDB {
       const request = store.put(apiKey, 'current');
 
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve();
+      request.onsuccess = () => {
+        this.executeCallbacks(apiKey);
+        resolve();
+      };
     });
   }
 
@@ -49,7 +71,12 @@ class ApiKeyDB {
       const request = store.get('current');
 
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = () => {
+        if (request.result) {
+          this.executeCallbacks(request.result);
+        }
+        resolve(request.result);
+      };
     });
   }
 }

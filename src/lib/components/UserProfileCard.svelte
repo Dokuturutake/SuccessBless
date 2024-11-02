@@ -105,7 +105,7 @@
           <h1 class="text-xl font-bold text-gray-900 dark:text-white">
             {displayName}
           </h1>
-          <p class="text-sm text-gray-600 dark:text-gray-400">@{username}</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">@{displayName.toLowerCase().replace(' ', '')}</p>
           {#if bio}
             <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{bio}</p>
           {/if}

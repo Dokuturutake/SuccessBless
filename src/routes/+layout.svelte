@@ -15,6 +15,7 @@
 	import { profileStore } from "$lib/stores/profileStore";
 	import { startRandomLikeIncrease } from "$lib/utils/likeSimulator";
 	import { achievementStore } from "$lib/stores/achievementStore";
+	import { onNavigate } from "$app/navigation";
 
   let sidebarOpen = false;
   let tweetDialogOpen = false;
@@ -31,11 +32,17 @@
       sidebarOpen = isDesktop;
     });
 
-    apiKeyStore.loadApiKey();
-    profileStore.loadProfile();
     startRandomLikeIncrease();
     achievementStore.init();
+    profileStore.loadProfile();
     await tweetStore.init();
+    await apiKeyStore.loadApiKey();
+  });
+  
+  onNavigate((navigation) => {
+      profileStore?.setProfile($profileStore);
+      console.log("momomom");
+      
   });
 
   function toggleSidebar() {
