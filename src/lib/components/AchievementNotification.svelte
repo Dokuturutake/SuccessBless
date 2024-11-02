@@ -65,7 +65,7 @@
       <div class="p-4">
         <div class="flex items-center space-x-3">
           <div class="relative">
-            <img src={achievement.imageUrl} alt="" class="w-12 h-12" />
+            <img src={base+achievement.imageUrl} alt="" class="w-12 h-12" />
             <div class="absolute -top-1 -right-1">
               <LucideTrophy class="w-5 h-5 text-yellow-400" />
             </div>
