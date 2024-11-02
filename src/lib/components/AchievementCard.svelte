@@ -27,7 +27,7 @@
       <div class="flex items-center space-x-4">
         <div class="relative w-16 h-16">
           <img
-            src={achievement.imageUrl}
+            src={base+achievement.imageUrl}
             alt=""
             class="w-full h-full transition-all duration-300"
             class:filter={!isUnlocked}
