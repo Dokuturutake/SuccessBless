@@ -123,7 +123,7 @@
         <div class="mt-4 space-y-4">
           {#each tweet.replies as reply (reply.id)}
             <div class="flex items-start space-x-3 md:pl-12 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-              <img src="/userImage/{reply.imagenum ? reply.imagenum : 0}.webp" alt="Profile" class="w-9 h-9 rounded-full">
+              <img src="{base}/userImage/{reply.imagenum ? reply.imagenum : 0}.webp" alt="Profile" class="w-9 h-9 rounded-full">
               <div class="flex-1">
                 <div class="flex items-center">
                   <span class="font-bold text-[14px] dark:text-white">{reply.name}</span>
