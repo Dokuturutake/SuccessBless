@@ -9,6 +9,7 @@
 	import { profileStore } from "$lib/stores/profileStore";
 	import { addBasePath } from "$lib/utils/addBasePath";
 	import { base } from "$app/paths";
+	import TweetContent from "./TweetContent.svelte";
 
   export let tweet: Tweet;
 
@@ -75,7 +76,8 @@
         <span class="text-gray-500 dark:text-gray-400 text-[15px] mx-1 hidden sm:inline">·</span>
         <span class="text-gray-500 dark:text-gray-400 text-[15px] w-full sm:w-auto">{formatDate(tweet.createdAt)}</span>
       </div>
-      <p class="mt-1 text-[15px] leading-normal dark:text-white">{tweet.content}</p>
+      <TweetContent content={tweet.content}/>
+
       
       <!-- 画像の表示 -->
       {#if imageUrl}
@@ -131,7 +133,7 @@
                   <span class="text-gray-500 dark:text-gray-400 text-[14px] mx-1">·</span>
                   <span class="text-gray-500 dark:text-gray-400 text-[14px]">{formatDate(reply.createdAt)}</span>
                 </div>
-                <p class="mt-1 text-[14px] leading-normal dark:text-white">{reply.content}</p>
+                <TweetContent content={reply.content}/>
               </div>
             </div>
           {/each}

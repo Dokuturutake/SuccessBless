@@ -7,6 +7,7 @@ export interface Tweet {
   replies: Reply[];
   replyCount: number;
   imageBlob?: Blob;  // 圧縮済みの1つの画像データ
+  hashtags?: string[];
 }
 
 export interface Reply {

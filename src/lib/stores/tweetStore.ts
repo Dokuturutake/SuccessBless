@@ -51,7 +51,7 @@ function createTweetStore() {
       }
     },
 
-    async addTweet(name: string, content: string,likes:number, image?: File, ): Promise<Tweet> {
+    async addTweet(name: string, content: string,likes:number, image?: File, hashtags?: string[]): Promise<Tweet> {
       const newTweet: Tweet = {
         id: uuidv4(),
         name,
@@ -59,8 +59,12 @@ function createTweetStore() {
         createdAt: new Date().toISOString(),
         likes: likes,
         replies: [],
-        replyCount: 0
+        replyCount: 0,
       };
+      
+      if(hashtags){
+        newTweet.hashtags = hashtags;
+      }
 
       if (image) {
         try {
