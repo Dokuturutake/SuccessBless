@@ -1,23 +1,22 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { apiKeyDB } from '$lib/db/apiKeyDB';
 
 function createApiKeyStore() {
   const { subscribe, set } = writable<string>('');
 
   return {
     subscribe,
-    setApiKey: (apiKey: string) => {
+    setApiKey: async (apiKey: string) => {
       if (browser) {
-        const encryptedApiKey = btoa(apiKey); // 簡易的な暗号化
-        localStorage.setItem('geminiApiKey', encryptedApiKey);
+        await apiKeyDB.saveApiKey(apiKey);
         set(apiKey);
       }
     },
-    loadApiKey: () => {
+    loadApiKey: async () => {
       if (browser) {
-        const encryptedApiKey = localStorage.getItem('geminiApiKey');
-        if (encryptedApiKey) {
-          const apiKey = atob(encryptedApiKey); // 復号化
+        const apiKey = await apiKeyDB.getApiKey();
+        if (apiKey) {
           set(apiKey);
         }
       }
