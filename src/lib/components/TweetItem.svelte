@@ -7,6 +7,8 @@
 	import { onDestroy, onMount } from "svelte";
 	import type { Tweet } from "$lib/types/tweet";
 	import { profileStore } from "$lib/stores/profileStore";
+	import { addBasePath } from "$lib/utils/addBasePath";
+	import { base } from "$app/paths";
 
   export let tweet: Tweet;
 
@@ -65,7 +67,7 @@
 
 <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
   <div class="flex items-start space-x-3">
-    <img src="{$profileStore?.avatarUrl || "/userimage/0.webp"}" alt="Profile" class="w-12 h-12 rounded-full">
+    <img src="{$profileStore?.avatarUrl || base+"/userimage/0.webp"}" alt="Profile" class="w-12 h-12 rounded-full">
     <div class="flex-1">
       <div class="flex flex-wrap items-center gap-y-1">
         <span class="font-bold text-[15px] mr-2 dark:text-white">{tweet.name}</span>

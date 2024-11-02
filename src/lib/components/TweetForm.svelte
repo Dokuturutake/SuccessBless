@@ -8,11 +8,12 @@
   import { createEventDispatcher } from 'svelte';
 	import { profileStore } from "$lib/stores/profileStore";
 	import { get } from "svelte/store";
+	import { base } from "$app/paths";
 
   const dispatch = createEventDispatcher();
   let isImageDialogOpen = false;
 
-  let avatarUrl = "/userImage/0.webp";
+  let avatarUrl = base+"/userImage/0.webp";
 
   function handleClick() {
     dispatch('reply', { message: 'Replyボタンがクリックされました' });

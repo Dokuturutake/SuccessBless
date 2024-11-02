@@ -14,12 +14,13 @@
 	import UserProfileCard from "./UserProfileCard.svelte";
 	import { validate } from "uuid";
 	import type { Tweet } from "$lib/types/tweet";
+	import { base } from "$app/paths";
 
   let error = "";
   let isApiKeyModalOpen = false;
   
   export let username = "";
-  export let avatarUrl = "/userImage/0.webp";
+  export let avatarUrl = base+"/userImage/0.webp";
   export let bio = "";
   export let joinDate = new Date();
   export let totalLikes = 0;
