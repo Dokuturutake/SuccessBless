@@ -79,7 +79,7 @@
   }
 </script>
 
-{#if !isInstalled}
+{#if !isInstalled && deferredPrompt}
 <div class="flex justify-center mt-6">
   <div class="relative">
     <button 
