@@ -1,0 +1,32 @@
+{
+    "theme_color": "#a0bde9",
+    "background_color": "#14173d",
+    "orientation": "any",
+    "display": "standalone",
+    "dir": "auto",
+    "lang": "ja",
+    "name": "SUCCSESS BLESS",
+    "short_name": "S.B",
+    "start_url": "/",
+    "description": "SUCCESSBLESS は、AIを活用し、SNSのような感覚で目標達成をサポートするWebアプリケーションです。ユーザーは目標達成を投稿し、それに対してAIが応援コメントや評価を返します。まるでSNSで仲間と交流しているかのような感覚で、楽しく目標達成を進めることができます。",
+    "icons": [
+        {
+            "purpose": "maskable",
+            "sizes": "512x512",
+            "src": "icon512_maskable.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any", 
+            "sizes": "512x512", 
+            "src": "icon512_rounded.png", 
+            "type": "image/png"
+        },
+        {
+            "purpose": "any", 
+            "sizes": "192x192", 
+            "src": "icon192_maskable.png", 
+            "type": "image/png"
+        }
+    ]
+}

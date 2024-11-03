@@ -33,6 +33,9 @@
    4.3. 抽出した特徴と参照データに基づいて、予測されるいいね数を算出します。95%は0~100で、5%で100~99999にしてください。
    4.4. 算出結果が0から99999の範囲内かを確認します。
 
+5. **形式に合っているか**:
+   5.1. 最後に、ツイートの記述形式が、Output Formatとあっているかを確認してください。
+
 # Output Format
 
 Generate a response using the following JSON schema:
@@ -55,7 +58,7 @@ Response = {
 
 ```json
 {
-	"predicted_likes": "数値",
+	"predicted_likes": "59",
 	"replies": [
 		{
 			"username": "funny_user",

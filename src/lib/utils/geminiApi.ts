@@ -169,6 +169,7 @@ class GeminiApi {
 
     try {
       
+      
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
@@ -216,7 +217,7 @@ export function generateReplyPrompt() {
     const characters = charactersText.split('\n').filter(line => line.trim() !== '');
 
     // プロンプトファイルを読み込む
-    let promptTemplate = getResponseTweetsPrompt;
+    const promptTemplate = getResponseTweetsPrompt;
 
     // ランダムに10個のキャラクターを選択
     const selectedCharacters = [];

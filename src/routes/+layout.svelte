@@ -1,6 +1,7 @@
 <script lang="ts">
   import "../app.css";
   import {LucideMedal, LucideSettings, LucideHome, LucideUser, LucideBell, LucideFeather, LucideMenu, LucideX } from "lucide-svelte";
+  import { dev } from '$app/environment';
   import { page } from '$app/stores';
   import { slide } from 'svelte/transition';
   import { tweened } from 'svelte/motion';
@@ -16,6 +17,7 @@
 	import { startRandomLikeIncrease } from "$lib/utils/likeSimulator";
 	import { achievementStore } from "$lib/stores/achievementStore";
 	import { onNavigate } from "$app/navigation";
+	import PWAInstallButton from "$lib/components/PWAInstallButton.svelte";
 
   let sidebarOpen = false;
   let tweetDialogOpen = false;
@@ -62,6 +64,8 @@
       sidebarOpen = false;
     }
   }
+
+
 </script>
 
 <div class="flex h-screen bg-gray-100 dark:bg-gray-900">
@@ -108,6 +112,7 @@
           <span>設定</span>
         </a>
       </nav>
+      <PWAInstallButton/>
       <button on:click={openTweetForm} class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center justify-center">
         <LucideFeather size={18} class="mr-2" />
         <span>投稿</span>
