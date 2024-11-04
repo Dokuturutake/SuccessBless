@@ -219,10 +219,12 @@ export function generateReplyPrompt() {
     // プロンプトファイルを読み込む
     const promptTemplate = getResponseTweetsPrompt;
 
-    // ランダムに10個のキャラクターを選択
+    // ランダムにキャラクターを選択
     const selectedCharacters = [];
     const tempCharacters = [...characters];
-    const length = 15;
+    const max = 15;
+    const min = 5;
+    const length = getRandomNumber(min, max);
     while (selectedCharacters.length < length && tempCharacters.length > 0) {
       const randomIndex = Math.floor(Math.random() * tempCharacters.length);
       selectedCharacters.push(tempCharacters.splice(randomIndex, 1)[0]);
@@ -240,4 +242,8 @@ export function generateReplyPrompt() {
     console.error('Error generating prompt:', error);
     throw new Error('Failed to generate prompt');
   }
+}
+
+function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
